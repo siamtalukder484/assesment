@@ -3,9 +3,28 @@ import React, {useState} from 'react';
 const Problem1 = () => {
 
     const [show, setShow] = useState('all');
+    const [user, setUser] = useState([]);
 
     const handleClick = (val) =>{
         setShow(val);
+    }
+
+    let [FormData, setFormData] = useState({
+        username: "",
+        status: "",
+    })
+
+    let handleForm = (e) => {
+        let {name, value} = e.target
+        setFormData({...FormData, [name]:value})
+
+     }
+
+     let handleSubmit = async (e) => {
+        e.preventDefault()
+        // console.log(FormData);
+        setUser(FormData)
+
     }
 
     return (
@@ -14,15 +33,15 @@ const Problem1 = () => {
             <div className="row justify-content-center mt-5">
                 <h4 className='text-center text-uppercase mb-5'>Problem-1</h4>
                 <div className="col-6 ">
-                    <form className="row gy-2 gx-3 align-items-center mb-4">
+                    <form onSubmit={handleSubmit} className="row gy-2 gx-3 align-items-center mb-4">
                         <div className="col-auto">
-                            <input onChange={handleForm} type="text" className="form-control" placeholder="Name"/>
+                            <input onChange={handleForm} name='username' type="text" className="form-control" placeholder="Name"/>
                         </div>
                         <div className="col-auto">
-                            <input onChange={handleForm} type="text" className="form-control" placeholder="Status"/>
+                            <input onChange={handleForm} name='status' type="text" className="form-control" placeholder="Status"/>
                         </div>
                         <div className="col-auto">
-                            <button onClick={handleSubmitClick} type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
