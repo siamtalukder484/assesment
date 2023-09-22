@@ -4,9 +4,11 @@ const Problem1 = () => {
 
     const [show, setShow] = useState('all');
     const [user, setUser] = useState([]);
+    const [activeFilter, setActiveFilter] = useState('all');
 
     const handleClick = (val) =>{
         setShow(val);
+        setActiveFilter(val);
     }
 
     let [FormData, setFormData] = useState({
@@ -22,10 +24,13 @@ const Problem1 = () => {
 
      let handleSubmit = async (e) => {
         e.preventDefault()
-        // console.log(FormData);
-        setUser(FormData)
-
+        setUser([...user, FormData]); 
+        setFormData({
+            username: "", 
+            status: "",
+        });
     }
+
 
     return (
 
@@ -35,10 +40,10 @@ const Problem1 = () => {
                 <div className="col-6 ">
                     <form onSubmit={handleSubmit} className="row gy-2 gx-3 align-items-center mb-4">
                         <div className="col-auto">
-                            <input onChange={handleForm} name='username' type="text" className="form-control" placeholder="Name"/>
+                            <input onChange={handleForm} value={FormData.username} name='username' type="text" className="form-control" placeholder="Name"/>
                         </div>
                         <div className="col-auto">
-                            <input onChange={handleForm} name='status' type="text" className="form-control" placeholder="Status"/>
+                            <input onChange={handleForm} value={FormData.status} name='status' type="text" className="form-control" placeholder="Status"/>
                         </div>
                         <div className="col-auto">
                             <button type="submit" className="btn btn-primary">Submit</button>
@@ -66,7 +71,18 @@ const Problem1 = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        
+                            {user.filter(item => activeFilter === 'all' || item.status === activeFilter).map(item => (
+                                <tr>
+                                    <td>{item.username}</td>
+                                    <td>{item.status}</td>
+                                </tr>
+                            ))}
+                            {/* {user.map(item => (
+                                <tr key={item.username}>
+                                    <td>{item.username}</td>
+                                    <td>{item.status}</td>
+                                </tr>
+                            ))} */}
                         </tbody>
                     </table>
                 </div>
